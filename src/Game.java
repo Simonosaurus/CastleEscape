@@ -6,6 +6,7 @@ public class Game {
 
     private final Scanner scanner = new Scanner(System.in);
     private Player player;
+    private String lastMove;   // smer posleneho pohybu (Podla toho sa vykresli hrac)
     private boolean running = true;
 
     public void run() {
@@ -70,6 +71,7 @@ public class Game {
         }
 
         player.setCurrentRoom(target);
+        lastMove = direction;
         describeCurrentRoom();
     }
 
@@ -100,13 +102,13 @@ public class Game {
         System.out.println("Nacházíš se zde: " + room.getName() + ".");
         if (!room.getDescription().isBlank()) {
             System.out.println(room.getDescription());
-            System.out.print(RoomArt.draw(room));
         }
+        System.out.print(RoomArt.draw(room, lastMove));
         System.out.println(room.describeItems());
+        System.out.println(RoomArt.describeExits(room));
     }
 
     private void printHelp() {
-        Room room = player.getCurrentRoom();
         System.out.println("Příkazy:");
         System.out.println("  N / E / S / W - pohyb na sever, východ, jih nebo západ");
         System.out.println("  I - vypíše tvůj inventář");
@@ -114,7 +116,7 @@ public class Game {
         System.out.println("  L - vypíše předměty v místnosti");
         System.out.println("  H - zobrazí tuto nápovědu");
         System.out.println("  Q - ukončí hru");
-        System.out.print(RoomArt.draw(room));
+        System.out.println("V obrázku místnosti jsi ty (O).");
     }
 
     private String readLine() {
