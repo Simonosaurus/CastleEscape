@@ -100,6 +100,7 @@ public class Game {
         System.out.println("Nacházíš se zde: " + room.getName() + ".");
         if (!room.getDescription().isBlank()) {
             System.out.println(room.getDescription());
+            System.out.print(RoomArt.draw(room));
         }
         System.out.println(room.describeItems());
     }
