@@ -1,0 +1,4 @@
+room_id;stat;min_value;message
+1;wisdom;15;Nevíš, jak se dostat do hradu.
+101;wisdom;30;Nejsi dost moudrý, abys našel cestu do této komnaty.
+11;strength;30;Nejsi dost silný, abys otevřel hlavní bránu.

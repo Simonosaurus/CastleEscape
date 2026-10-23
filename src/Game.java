@@ -1,3 +1,5 @@
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Scanner;
 
 public class Game {
@@ -7,7 +9,13 @@ public class Game {
     private boolean running = true;
 
     public void run() {
-        Room start = buildWorld();
+        Room start;
+        try {
+            start = loadWorld();
+        } catch (IllegalStateException e) {
+            System.out.println("Hru se nepodařilo spustit: " + e.getMessage());
+            return;
+        }
         player = new Player(start);
 
         System.out.println("Když dorazíš k molu, rozhlížíš se po hradním přístavu a hledáš vstup do hradu. "
@@ -28,40 +36,12 @@ public class Game {
     }
 
 
-    private Room buildWorld() {
-        Room harbour = new Room(0, "Hradní přístav");
-        Room lobby = new Room(1, "Hradní hala");
-        Room l1 = new Room(2, "L1");
-        Room l2 = new Room(3, "L2");
-        Room r1 = new Room(8, "R1");
-        Room r2 = new Room(9, "R2");
-        Room villedor = new Room(11, "Villedor");
-
-        harbour.addExit("E", lobby);
-
-        lobby.addExit("N", l1);
-        lobby.addExit("W", harbour);
-        lobby.addExit("S", r1);
-
-        l1.addExit("E", l2);
-        l1.addExit("S", lobby);
-
-        l2.addExit("W", l1);
-
-        r1.addExit("N", lobby);
-        r1.addExit("E", r2);
-
-        r2.addExit("W", r1);
-        r2.addExit("E", villedor);
-
-        villedor.addExit("W", r2);
-
-        harbour.addItem(new Item("Kouzelná květina"));
-        lobby.addItem(new Item("Meč"));
-        l2.addItem(new Item("Lektvar"));
-        r2.addItem(new Item("Lektvar síly"));
-
-        return harbour;
+    private Room loadWorld() {
+        Path dataDir = Path.of("data");
+        if (!Files.isDirectory(dataDir)) {
+            dataDir = Path.of("..", "data");   // spuštění ze složky src
+        }
+        return new WorldLoader(dataDir).load();
     }
 
 
@@ -118,6 +98,9 @@ public class Game {
     private void describeCurrentRoom() {
         Room room = player.getCurrentRoom();
         System.out.println("Nacházíš se zde: " + room.getName() + ".");
+        if (!room.getDescription().isBlank()) {
+            System.out.println(room.getDescription());
+        }
         System.out.println(room.describeItems());
     }
 

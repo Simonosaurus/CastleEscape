@@ -54,12 +54,12 @@ Soubory: `Stats.java`, `Player.java`, `Item.java`, `Weapon.java`, `SaveManager.j
 
 ## Člen 3 (Matúš) – Pohyb, podmínky, konec hry, texty (kap. 2, 6, 9)
 
-- `EntryCondition` a kontrola při pohybu: Castle Lobby vyžaduje wisdom 15, Secret Chamber wisdom 30, Villedor strength 30. Při nesplnění se vypíše chybová zpráva a hráč zůstane (`Cannot enter room: You can't figure out how to get into the castle.`).
+- `EntryCondition` a kontrola při pohybu: Hradní hala vyžaduje wisdom 15, Tajná komnata wisdom 30, Villedor strength 30. Při nesplnění se vypíše chybová zpráva a hráč zůstane (`Nelze vstoupit: Nevíš, jak se dostat do hradu.`). Zprávy jsou v `data/conditions.csv`.
 - Vítězná místnost: vstup do Villedor vypíše uvítací zprávu a hru ukončí vítězstvím.
 - Konec hry smrtí, když zdraví klesne na 0 (napojit na souboj od člena 4).
-- Výpis popisu místnosti při vstupu (`Moved to Castle Lobby` + popis), úvodní text a nápověda `H` podle GDD (kap. 9–10).
-- Hlášky: `Invalid input. Please enter N, E, S, W, I, P, D, H or Q.` a `You cannot move in that direction from...`.
-- Sjednotit jazyk hlášek (teď česky, GDD ukazuje anglicky; domluvte se v týmu a držte jeden).
+- Výpis popisu místnosti při vstupu (`Přesun do: Hradní hala` + popis), úvodní text a nápověda `H` podle GDD (kap. 9–10).
+- Hlášky: `Neplatný vstup. Zadej N, E, S, W, I, P, D, H nebo Q.` a `Tímto směrem se z místnosti ... jít nedá.`
+- **Celá hra je česky** (hlášky, názvy místností, předměty a nepřátelé v CSV, popisy). Držte se toho ve všech nových textech. V kódu zůstávají anglické identifikátory (např. klíče `wisdom`, `strength` v CSV).
 - Zapojit příkazy `D` a `SAVE/LOAD` do `handleCommand` (volají metody členů 2).
 - **Nice to have:** logování celého průběhu do `log.txt` (`GameLogger`, zapisuje vstupy i výstupy hry).
 

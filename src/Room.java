@@ -12,6 +12,9 @@ public class Room {
     private final String name;
     private final Map<String, Room> exits = new HashMap<>();   // klíč je směr "N", "E", "S", "W"
     private final List<Item> items = new ArrayList<>();
+    private String description = "";
+    private boolean winRoom;
+    private String welcomeMessage = "";
 
     public Room(int id, String name) {
         this.id = id;
@@ -24,6 +27,30 @@ public class Room {
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isWinRoom() {
+        return winRoom;
+    }
+
+    public void setWinRoom(boolean winRoom) {
+        this.winRoom = winRoom;
+    }
+
+    public String getWelcomeMessage() {
+        return welcomeMessage;
+    }
+
+    public void setWelcomeMessage(String welcomeMessage) {
+        this.welcomeMessage = welcomeMessage;
     }
 
     public void addExit(String direction, Room target) {

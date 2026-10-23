@@ -1,0 +1,14 @@
+id;name;description;win;welcome
+0;Hradní přístav;Stojíš na molu a rozhlížíš se po hradním přístavu, kde hledáš vstup do hradu. Na druhé straně leží nebeská vesnice, které říkáš domov.;false;
+1;Hradní hala;Stojíš ve vstupní hale starobylého hradu. Stěny zdobí tapisérie s hrdinnými bitvami a ušlechtilými vládci dávných časů.;false;
+2;L1;Úzká chodba osvětlená blikajícími pochodněmi. Kamenná podlaha je vyšlapaná nesčetnými kroky.;false;
+3;L2;Prašná chodba lemovaná rozbitými sochami.;false;
+4;L3;Studená chodba, která se stáčí na jih. Kdesi vpředu slyšíš ozvěnu kapající vody.;false;
+5;Křižovatka;Široká křižovatka uprostřed hradu. Chodby vedou na všechny strany a ve stínech se cosi hýbe.;false;
+6;Soudní síň;Rozlehlá síň s vyvýšeným trůnem na konci. Vzduch je těžký, jako by tě sledovaly samotné stěny.;false;
+7;Velká zatopená místnost;Obrovská místnost zatopená tmavou vodou po kolena. Za ní vidíš denní světlo a cestu ven.;false;
+8;R1;Vlhká sklepní chodba. Z východu se ozývá škrábání.;false;
+9;R2;Sklep plný krys. V temnotě se jim blýskají oči.;false;
+10;R3;Drsná místnost podobná jeskyni. Země se ti chvěje pod nohama.;false;
+101;Tajná komnata;Skrytá komnata, kterou málokdo kdy viděl. Na kamenných stojanech odpočívají prastaré zbraně.;false;
+11;Villedor;;true;Dokázal jsi to! Brány se otevírají a světla Villedoru tě vítají doma. Z hradu jsi unikl!
