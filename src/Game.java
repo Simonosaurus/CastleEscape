@@ -109,6 +109,7 @@ public class Game {
     }
 
     private void printHelp() {
+        Room room = player.getCurrentRoom();
         System.out.println("Příkazy:");
         System.out.println("  N / E / S / W - pohyb na sever, východ, jih nebo západ");
         System.out.println("  I - vypíše tvůj inventář");
@@ -117,6 +118,8 @@ public class Game {
         System.out.println("  H - zobrazí tuto nápovědu");
         System.out.println("  Q - ukončí hru");
         System.out.println("V obrázku místnosti jsi ty (O).");
+        System.out.print(RoomArt.draw(room, lastMove));
+        System.out.println(RoomArt.describeExits(room));
     }
 
     private String readLine() {
