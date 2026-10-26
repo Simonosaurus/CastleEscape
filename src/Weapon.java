@@ -6,7 +6,7 @@ public class Weapon extends Item {
     }
     public Weapon(String name, int damage, Stats modifier){
         super(name, modifier);
-        this.damage = damage
+        this.damage = damage;
     }
 
     public int getDamage() {
