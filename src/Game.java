@@ -8,6 +8,7 @@ public class Game {
     private Player player;
     private String lastMove;   // smer posleneho pohybu (Podla toho sa vykresli hrac)
     private boolean running = true;
+    private final CombatSystem combat = new CombatSystem(this::readLine);
 
     public void run() {
         Room start;
@@ -19,9 +20,7 @@ public class Game {
         }
         player = new Player(start);
 
-        System.out.println("Když dorazíš k molu, rozhlížíš se po hradním přístavu a hledáš vstup do hradu. "
-                + "Na druhé straně leží nebeská vesnice, které říkáš domov.");
-        System.out.println();
+        Intro.show(this::readLine);
         printHelp();
         System.out.println();
         describeCurrentRoom();
@@ -73,6 +72,33 @@ public class Game {
         player.setCurrentRoom(target);
         lastMove = direction;
         describeCurrentRoom();
+        fightIfMonsters(target, direction);
+    }
+
+    private void fightIfMonsters(Room room, String direction) {
+        CombatSystem.Result result = combat.enterRoom(player, room);
+        switch (result) {
+            case PLAYER_DIED -> {
+                System.out.println("Konec hry. Zemřel jsi.");
+                running = false;
+            }
+            case RETREATED, DEFEATED -> {
+                lastMove = opposite(direction);
+                System.out.println();
+                describeCurrentRoom();
+            }
+            default -> {
+            }
+        }
+    }
+
+    private static String opposite(String direction) {
+        return switch (direction) {
+            case "N" -> "S";
+            case "S" -> "N";
+            case "E" -> "W";
+            default -> "E";
+        };
     }
 
     private void pickUpItem() {

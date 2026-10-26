@@ -51,6 +51,9 @@ public class SaveManager {
             for(Item item : room.getItems()){
                 lines.add("GROUND" + SEP + room.getId() + SEP + encode(item));
             }
+            for(Monster monster : room.getMonsters()){
+                lines.add("MONSTER" + SEP + room.getId() + SEP + monster.getName() + SEP + monster.getHealth());
+            }
         }
         Path tmp = file.resolveSibling(file.getFileName() + ".tmp");
         try{
@@ -77,6 +80,7 @@ public class SaveManager {
         Map<String, Integer> stats = new HashMap<>();
         List<Item> inventory = new ArrayList<>();
         Map<Integer, List<Item>> ground = new LinkedHashMap<>();
+        Map<Integer, List<String[]>> monsters = new HashMap<>();
 
         boolean headerSeen = false;
         for (int i = 0; i < lines.size(); i++) {
@@ -120,7 +124,10 @@ public class SaveManager {
                     ground.computeIfAbsent(roomId, k -> new ArrayList<>()).add(decode(f, 2, lineNo));
                 }
                 case "MONSTER" -> {
-                    // TODO (Marek): viz popis třídy. Zatím se nepřátelé neukládají a řádek se přeskočí.
+                    expectFields(f, 4, lineNo);
+                    int roomId = roomIdAt(f, 1, lineNo, rooms, false);
+                    intAt(f, 3, lineNo);
+                    monsters.computeIfAbsent(roomId, k -> new ArrayList<>()).add(f);
                 }
                 default -> throw error(lineNo, "neznámý záznam '" + f[0] + "'");
             }
@@ -148,6 +155,10 @@ public class SaveManager {
             }
         }
 
+        for (Room room : rooms.values()) {
+            restoreMonsters(room, monsters.getOrDefault(room.getId(), List.of()));
+        }
+
         Player player = new Player(rooms.get(playerRoomId));
         if (previousRoomId != null && previousRoomId >= 0) {
             player.setPreviousRoom(rooms.get(previousRoomId));
@@ -160,6 +171,27 @@ public class SaveManager {
         }
         return player;
 
+    }
+    /** Nechá v místnosti jen uložené živé nepřátele (podle jména) a nastaví jim uložené zdraví. */
+    private static void restoreMonsters(Room room, List<String[]> saved){
+        List<Monster> pool = new ArrayList<>(room.getMonsters());
+        room.getMonsters().clear();
+        for (String[] record : saved) {
+            Monster match = null;
+            for (Monster monster : pool) {
+                if (monster.getName().equals(record[2])) {
+                    match = monster;
+                    break;
+                }
+            }
+            if (match == null) {
+                throw new IllegalStateException("Uložená hra je poškozená: v místnosti " + room.getId() + " není nepřítel '" + record[2] + "'.");
+            }
+            pool.remove(match);
+            match.resetHealth();
+            match.takeDamage(match.getMaxHealth() - Integer.parseInt(record[3].trim()));
+            room.addMonster(match);
+        }
     }
     private static Map<Integer, Room> indexRooms(Room from){
         Map<Integer, Room> found = new HashMap<>();

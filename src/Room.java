@@ -12,6 +12,7 @@ public class Room {
     private final String name;
     private final Map<String, Room> exits = new HashMap<>();   // klíč je směr "N", "E", "S", "W"
     private final List<Item> items = new ArrayList<>();
+    private final List<Monster> monsters = new ArrayList<>();
     private String description = "";
     private boolean winRoom;
     private String welcomeMessage = "";
@@ -51,6 +52,18 @@ public class Room {
 
     public void setWelcomeMessage(String welcomeMessage) {
         this.welcomeMessage = welcomeMessage;
+    }
+
+    public List<Monster> getMonsters() {
+        return monsters;
+    }
+
+    public void addMonster(Monster monster) {
+        monsters.add(monster);
+    }
+
+    public void removeMonster(Monster monster) {
+        monsters.remove(monster);
     }
 
     public void addExit(String direction, Room target) {
