@@ -93,9 +93,60 @@ public class Game {
             return;
         }
         room.removeItem(item);
-        player.pickUp(item);
-        System.out.println("Sebral jsi: " + item + ".");
+        String statChange = player.pickUp(item);
+        System.out.println("Sebral jsi: " + item.getName() + ".");
+        if(!statChange.isEmpty()){
+            System.out.println(statChange);
+        }
+        System.out.println(room.describeItems());
     }
+    private void dropItem() {
+        if (player.getInventory().isEmpty()) {
+            System.out.println("Nemáš u sebe nic, co by šlo zahodit.");
+            return;
+        }
+        System.out.println(player.describeInventory());
+        System.out.print("Zadej přesný název předmětu, který chceš zahodit: ");
+        String name = readLine();
+        if (name == null) {
+            return;
+        }
+        Item item = player.findItem(name.trim());
+        if (item == null) {
+            System.out.println("Takový předmět u sebe nemáš.");
+            return;
+        }
+        String statChange = player.discard(item);
+        player.getCurrentRoom().addItem(item);
+        System.out.println("Zahodil jsi: " + item.getName() + ".");
+        if (!statChange.isEmpty()) {
+            System.out.println(statChange);
+        }
+    }
+
+    private void saveGame() {
+        SaveManager saves = new SaveManager();
+        try {
+            saves.save(player);
+            System.out.println("Hra byla uložena do souboru " + saves.getFile() + ".");
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void loadGame() {
+        SaveManager saves = new SaveManager();
+        try {
+            Player loaded = saves.load(loadWorld());
+            player = loaded;
+            lastMove = null;
+            System.out.println("Hra byla načtena ze souboru " + saves.getFile() + ".");
+            describeCurrentRoom();
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     private void describeCurrentRoom() {
         Room room = player.getCurrentRoom();
