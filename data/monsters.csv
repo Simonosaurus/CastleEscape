@@ -1,8 +1,8 @@
-room_id;name;health;strength;agility
-5;Pavouk;20;8;12
-7;Král sirén;100;25;10
-9;Krysa;5;5;10
-9;Krysa;5;5;10
-9;Krysa;5;5;10
-9;Tlustá krysa;5;5;10
-10;Drak;100;12;10
+room_id;name;health;strength;agility;intro
+5;Pavouk;20;8;12;
+7;Král sirén;100;25;10;Z vody se line svůdná melodie a na hladinu vystupuje Král sirén.
+9;Krysa;5;5;10;
+9;Krysa;5;5;10;
+9;Krysa;5;5;10;
+9;Tlustá krysa;5;5;10;
+10;Drak;100;12;10;Země se otřásá a ozývá se ohlušující řev. Drak se probouzí!

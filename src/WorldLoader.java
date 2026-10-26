@@ -10,9 +10,9 @@ import java.util.Map;
 /**
  * Postaví výchozí stav herního světa z CSV souborů ve složce data (oddělovač ";", první řádek je hlavička).
  *
- * Teď se načítá rooms.csv, exits.csv a items.csv (jen název předmětu).
- * Soubory monsters.csv, conditions.csv a sloupce type/stat/value/damage v items.csv
- * se zapojí, až budou hotové třídy Monster, EntryCondition a Weapon.
+ * Teď se načítá rooms.csv, exits.csv, items.csv (jen název předmětu) a monsters.csv.
+ * Soubor conditions.csv a sloupce type/stat/value/damage v items.csv
+ * se zapojí, až budou hotové třídy EntryCondition a Weapon.
  */
 public class WorldLoader {
 
@@ -33,6 +33,7 @@ public class WorldLoader {
         loadRooms();
         loadExits();
         loadItems();
+        loadMonsters();
 
         Room start = rooms.get(START_ROOM_ID);
         if (start == null) {
@@ -69,6 +70,12 @@ public class WorldLoader {
     private void loadItems() {
         for (Row row : readRows("items.csv", 6)) {
             row.roomAt(0).addItem(new Item(row.at(1)));
+        }
+    }
+
+    private void loadMonsters() {
+        for (Row row : readRows("monsters.csv", 6)) {
+            row.roomAt(0).addMonster(new Monster(row.at(1), row.intAt(2), row.intAt(3), row.intAt(4), row.at(5)));
         }
     }
 
