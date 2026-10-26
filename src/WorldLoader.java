@@ -69,7 +69,12 @@ public class WorldLoader {
 
     private void loadItems() {
         for (Row row : readRows("items.csv", 6)) {
-            row.roomAt(0).addItem(new Item(row.at(1)));
+            try {
+                Item item = Item.fromData(row.at(2), row.at(1), row.at(3), row.intOrZeroAt(4), row.intOrZeroAt(5));
+                row.roomAt(0).addItem(item);
+            } catch (IllegalArgumentException e){
+                throw row.error(e.getMessage());
+            }
         }
     }
 
@@ -124,6 +129,9 @@ public class WorldLoader {
             } catch (NumberFormatException e) {
                 throw error("'" + at(index) + "' není celé číslo");
             }
+        }
+        int intOrZeroAt(int index){
+            return at(index).isEmpty() ? 0 : intAt(index);
         }
 
         Room roomAt(int index) {
