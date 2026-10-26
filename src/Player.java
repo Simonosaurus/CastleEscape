@@ -10,7 +10,7 @@ public class Player {
     private final List<Item> inventory = new ArrayList<>();
     private final List<Weapon> equippedWeapons = new ArrayList<>();
     private Room currentRoom;
-    private Room previousRoom
+    private Room previousRoom;
 
     public Player(Room startingRoom) {
         this.currentRoom = startingRoom;
@@ -54,22 +54,49 @@ public class Player {
         return sum;
     }
 
-    public void pickUp(Item item) {
+    public String pickUp(Item item) {
         inventory.add(item);
         if(item instanceof Weapon weapon){
             equippedWeapons.add(weapon);
         }
         return applyModifier(item, 1);
     }
-
+    public String discard(Item item){
+        inventory.remove(item);
+        if(item instanceof Weapon weapon){
+            equippedWeapons.remove(weapon);
+        }
+        return applyModifier(item, -1);
+    }
+    public Item findItem(String itemName){
+        for(Item item : inventory){
+            if(item.getName().equalsIgnoreCase(itemName)){
+                return item;
+            }
+        }
+        return null;
+    }
+    public void restoreItem(Item item){
+        inventory.add(item);
+        if(item instanceof Weapon weapon){
+            equippedWeapons.add(weapon);
+        }
+    }
 
     public String describeInventory() {
+        StringBuilder sb = new StringBuilder();
         if (inventory.isEmpty()) {
-            return "Tvůj inventář je prázdný.";
+            sb.append("Tvůj inventář je prázdný.");
+        }else{
+            sb.append("Inventář:");
+            for (Item item : inventory) {
+                sb.append("\n  - ").append(item);
+            }
         }
-        StringBuilder sb = new StringBuilder("Inventář:");
-        for (Item item : inventory) {
-            sb.append("\n  - ").append(item);
+        sb.append("\nVlastnosti");
+        for (String stat : Stats.NAMES){
+            String label = Stats.labelCZ(stat);
+            sb.append("\n ").append(Character.toUpperCase(label.charAt(0))).append(label.substring(1)).append(": ").append(stats.get(stat));
         }
         return sb.toString();
     }
