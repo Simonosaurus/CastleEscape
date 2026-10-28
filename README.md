@@ -85,3 +85,8 @@ První řádek každého souboru je hlavička. Klíče vlastností (`strength`, 
 - Pracujeme na větvi `dev`, `main` je jen pro odevzdání.
 - Před prací `git pull origin dev`, potom commit a `git push origin dev`.
 - Do `Game.java` sahejte jen malými zásahy, je to nejčastější zdroj konfliktů.
+
+## P.S.
+- Když by jsme se řídili čisťe a přesně podle stanoveného GDD, matematicky by nebylo možne hru vyhrát
+- Hráč by neměl dost "wisdom" aby se dostal do secret roomky a jeho itemy by neměli dost "strength" aby porazili final bosse
+- Proto byli do items.csv přidány dvě kopie itemú navíc
