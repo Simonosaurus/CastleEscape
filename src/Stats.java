@@ -61,7 +61,7 @@ public class Stats {
 
     public int add(String stat, int amount){
         int updated = get(stat) + amount;
-        set(stat, amount);
+        set(stat, updated);
         return updated;
     }
 

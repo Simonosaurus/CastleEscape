@@ -93,7 +93,7 @@ public class Player {
                 sb.append("\n  - ").append(item);
             }
         }
-        sb.append("\nVlastnosti");
+        sb.append("\nVlastnosti:");
         for (String stat : Stats.NAMES){
             String label = Stats.labelCZ(stat);
             sb.append("\n ").append(Character.toUpperCase(label.charAt(0))).append(label.substring(1)).append(": ").append(stats.get(stat));
