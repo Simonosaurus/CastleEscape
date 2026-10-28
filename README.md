@@ -35,11 +35,14 @@ V IntelliJ IDEA stačí spustit `Main` a nechat pracovní složku nastavenou na 
 | `N` / `E` / `S` / `W` | pohyb na sever, východ, jih, západ |
 | `I` | vypíše inventář a vlastnosti hráče |
 | `P` | sebere předmět (hra se zeptá na přesný název) |
+| `D` | zahodí předmět z inventáře (hra se zeptá na přesný název) |
 | `L` | vypíše předměty v místnosti |
 | `H` | zobrazí nápovědu |
+| `SAVE` | uloží hru do souboru `savegame.txt` |
+| `LOAD` | načte hru ze souboru `savegame.txt` |
 | `Q` | ukončí hru |
 
-Zatím nezapojené příkazy z návrhu: `D` (zahodit předmět) a ukládání a načítání hry.
+Uložená hra je v souboru `savegame.txt` v pracovní složce (soubor je v `.gitignore`). `LOAD` vrátí pozici, vlastnosti, inventář, předměty na zemi i živé nepřátele.
 
 ## Herní mechaniky
 
@@ -59,9 +62,10 @@ src/
   Intro         úvodní obrazovka
   WorldLoader   načtení světa z data/*.csv
   Room, RoomArt místnosti a jejich výpis
+  EntryCondition podmínka vstupu do místnosti (data/conditions.csv)
   Player, Stats, Item, Weapon   hráč, vlastnosti a předměty
   Monster, CombatSystem         nepřátelé a souboje
-  SaveManager   ukládání hry (připravuje se)
+  SaveManager   ukládání a načítání hry (SAVE, LOAD)
 ```
 
 ### Datové soubory
