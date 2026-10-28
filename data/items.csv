@@ -1,6 +1,6 @@
 room_id;name;type;stat;value;damage
 0;Kouzelná květina;item;wisdom;10;0
-1;Štít;item;none;0;0
+1;Štít;item;;0;0
 1;Meč;weapon;strength;12;10
 3;Lektvar;item;health;30;0
 101;Těžký obouruční meč;weapon;strength;-20;50
