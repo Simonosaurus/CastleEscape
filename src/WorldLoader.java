@@ -10,9 +10,8 @@ import java.util.Map;
 /**
  * Postaví výchozí stav herního světa z CSV souborů ve složce data (oddělovač ";", první řádek je hlavička).
  *
- * Teď se načítá rooms.csv, exits.csv, items.csv (jen název předmětu) a monsters.csv.
- * Soubor conditions.csv a sloupce type/stat/value/damage v items.csv
- * se zapojí, až budou hotové třídy EntryCondition a Weapon.
+ * Načítá se rooms.csv, exits.csv, items.csv (včetně typu, vlastnosti a poškození) a monsters.csv.
+ * Soubor conditions.csv se zapojí, až bude hotová třída EntryCondition.
  */
 public class WorldLoader {
 
