@@ -50,13 +50,16 @@ public class Game {
             case "N", "E", "S", "W" -> move(input.toUpperCase());
             case "I" -> System.out.println(player.describeInventory());
             case "P" -> pickUpItem();
+            case "D" -> dropItem();
             case "L" -> System.out.println(player.getCurrentRoom().describeItems());
             case "H" -> printHelp();
+            case "SAVE" -> saveGame();
+            case "LOAD" -> loadGame();
             case "Q" -> {
                 System.out.println("Ukončuješ hru. Ahoj!");
                 running = false;
             }
-            default -> System.out.println("Neplatný vstup. Zadej N, E, S, W, I, P, L, H nebo Q.");
+            default -> System.out.println("Neplatný vstup. Zadej N, E, S, W, I, P, L, D, H, SAVE, LOAD nebo Q.");
         }
     }
 
@@ -69,10 +72,32 @@ public class Game {
             return;
         }
 
+        EntryCondition condition = target.getEntryCondition();
+        if (condition != null && !condition.isMetBy(player)) {
+            System.out.println("Nelze vstoupit: " + condition.getFailMessage());
+            return;
+        }
+
         player.setCurrentRoom(target);
         lastMove = direction;
-        describeCurrentRoom();
+        System.out.println("Přesun do: " + target.getName());
+        describeRoomContents();
         fightIfMonsters(target, direction);
+        checkWin();
+    }
+
+    /** Vítězství: hráč stojí ve vítězné místnosti (a po případném souboji v ní zůstal živý). */
+    private void checkWin() {
+        Room room = player.getCurrentRoom();
+        if (!running || !room.isWinRoom()) {
+            return;
+        }
+        System.out.println();
+        if (!room.getWelcomeMessage().isBlank()) {
+            System.out.println(room.getWelcomeMessage());
+        }
+        System.out.println("Konec hry. Vyhrál jsi!");
+        running = false;
     }
 
     private void fightIfMonsters(Room room, String direction) {
@@ -175,8 +200,13 @@ public class Game {
 
 
     private void describeCurrentRoom() {
+        System.out.println("Nacházíš se zde: " + player.getCurrentRoom().getName() + ".");
+        describeRoomContents();
+    }
+
+    /** Popis, obrázek, předměty a východy aktuální místnosti. */
+    private void describeRoomContents() {
         Room room = player.getCurrentRoom();
-        System.out.println("Nacházíš se zde: " + room.getName() + ".");
         if (!room.getDescription().isBlank()) {
             System.out.println(room.getDescription());
         }
@@ -191,8 +221,11 @@ public class Game {
         System.out.println("  N / E / S / W - pohyb na sever, východ, jih nebo západ");
         System.out.println("  I - vypíše tvůj inventář");
         System.out.println("  P - sebere předmět ležící v místnosti");
+        System.out.println("  D - zahodí předmět z inventáře");
         System.out.println("  L - vypíše předměty v místnosti");
         System.out.println("  H - zobrazí tuto nápovědu");
+        System.out.println("  SAVE - uloží hru");
+        System.out.println("  LOAD - načte uloženou hru");
         System.out.println("  Q - ukončí hru");
         System.out.println("V obrázku místnosti jsi ty (O).");
         System.out.print(RoomArt.draw(room, lastMove));

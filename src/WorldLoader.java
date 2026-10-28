@@ -8,10 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Postaví výchozí stav herního světa z CSV souborů ve složce data (oddělovač ";", první řádek je hlavička).
- *
- * Načítá se rooms.csv, exits.csv, items.csv (včetně typu, vlastnosti a poškození) a monsters.csv.
- * Soubor conditions.csv se zapojí, až bude hotová třída EntryCondition.
+ * Postaví výchozí stav herního světa z CSV souborů ve složce data (oddělovač ";", první řádek je hlavička).*
+ * Načítá se rooms.csv, exits.csv, items.csv (včetně typu, vlastnosti a poškození), monsters.csv
+ * a conditions.csv (podmínky vstupu do místností).
  */
 public class WorldLoader {
 
@@ -33,6 +32,7 @@ public class WorldLoader {
         loadExits();
         loadItems();
         loadMonsters();
+        loadConditions();
 
         Room start = rooms.get(START_ROOM_ID);
         if (start == null) {
@@ -80,6 +80,20 @@ public class WorldLoader {
     private void loadMonsters() {
         for (Row row : readRows("monsters.csv", 6)) {
             row.roomAt(0).addMonster(new Monster(row.at(1), row.intAt(2), row.intAt(3), row.intAt(4), row.at(5)));
+        }
+    }
+
+    private void loadConditions() {
+        for (Row row : readRows("conditions.csv", 4)) {
+            Room room = row.roomAt(0);
+            String stat = row.at(1).toLowerCase();
+            if (!Stats.isValidName(stat)) {
+                throw row.error("neznámá vlastnost '" + row.at(1) + "' (povoleno strength, wisdom, agility, health)");
+            }
+            if (room.getEntryCondition() != null) {
+                throw row.error("místnost s ID " + room.getId() + " už má podmínku vstupu");
+            }
+            room.setEntryCondition(new EntryCondition(stat, row.intAt(2), row.at(3)));
         }
     }
 

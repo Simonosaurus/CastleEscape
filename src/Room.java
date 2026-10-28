@@ -16,6 +16,7 @@ public class Room {
     private String description = "";
     private boolean winRoom;
     private String welcomeMessage = "";
+    private EntryCondition entryCondition;   // null = do místnosti se dá vejít vždy
 
     public Room(int id, String name) {
         this.id = id;
@@ -52,6 +53,14 @@ public class Room {
 
     public void setWelcomeMessage(String welcomeMessage) {
         this.welcomeMessage = welcomeMessage;
+    }
+
+    public EntryCondition getEntryCondition() {
+        return entryCondition;
+    }
+
+    public void setEntryCondition(EntryCondition entryCondition) {
+        this.entryCondition = entryCondition;
     }
 
     public List<Monster> getMonsters() {
