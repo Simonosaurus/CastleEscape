@@ -3,3 +3,5 @@ out/
 !.idea/misc.xml
 !.idea/modules.xml
 savegame.txt
+log.txt
+.DS_Store

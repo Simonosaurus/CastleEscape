@@ -4,6 +4,7 @@
  */
 public class Main {
     public static void main(String[] args) {
+        GameLogger.start();
         new Game().run();
     }
 }

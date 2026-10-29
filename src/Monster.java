@@ -8,6 +8,7 @@ public class Monster {
     private final int strength;
     private final int agility;
     private final String intro;   // hláška při vstupu do místnosti (u bossů), jinak prázdná
+    private final String special; // popis speciálního útoku (každý třetí útok dělá dvojnásobné poškození), jinak prázdný
     private int health;
 
     public Monster(String name, int health, int strength, int agility) {
@@ -15,12 +16,17 @@ public class Monster {
     }
 
     public Monster(String name, int health, int strength, int agility, String intro) {
+        this(name, health, strength, agility, intro, "");
+    }
+
+    public Monster(String name, int health, int strength, int agility, String intro, String special) {
         this.name = name;
         this.maxHealth = health;
         this.health = health;
         this.strength = strength;
         this.agility = agility;
         this.intro = intro;
+        this.special = special;
     }
 
     public String getName() {
@@ -45,6 +51,10 @@ public class Monster {
 
     public String getIntro() {
         return intro;
+    }
+
+    public String getSpecial() {
+        return special;
     }
 
     public boolean isAlive() {

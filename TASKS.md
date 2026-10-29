@@ -2,7 +2,16 @@
 
 Zadání: Game Design Document (`Castle Escape.pdf`). Čísla v závorkách odkazují na jeho kapitoly.
 
-**Stav teď:** funguje pohyb mezi pár hardcoded místnostmi (`Game.buildWorld()`), příkazy N/E/S/W/I/P/L/H/Q a sbírání předmětů. Chybí vše ostatní.
+**Stav teď:** všechny části níže jsou hotové a hra jde projít od přístavu po výhru ve Villedoru. Texty o jednotlivých částech zůstávají jako původní zadání.
+
+| Člen | Část | Stav |
+|---|---|---|
+| Václav | načítání světa z CSV | hotovo |
+| Šimon | hráč, statistiky, předměty, ukládání a načítání | hotovo |
+| Matúš | podmínky vstupu, výhra, hlášky, log do `log.txt` | hotovo (log: `GameLogger`) |
+| Marek | nepřátelé a souboj, speciální útoky bossů | hotovo |
+
+Zbývá jen společný průchod hrou před odevzdáním a merge `dev` do `main`.
 
 ## Git workflow
 
@@ -61,7 +70,7 @@ Soubory: `Stats.java`, `Player.java`, `Item.java`, `Weapon.java`, `SaveManager.j
 - Hlášky: `Neplatný vstup. Zadej N, E, S, W, I, P, D, H nebo Q.` a `Tímto směrem se z místnosti ... jít nedá.`
 - **Celá hra je česky** (hlášky, názvy místností, předměty a nepřátelé v CSV, popisy). Držte se toho ve všech nových textech. V kódu zůstávají anglické identifikátory (např. klíče `wisdom`, `strength` v CSV).
 - Zapojit příkazy `D` a `SAVE/LOAD` do `handleCommand` (volají metody členů 2).
-- **Nice to have:** logování celého průběhu do `log.txt` (`GameLogger`, zapisuje vstupy i výstupy hry).
+- **Nice to have (hotovo):** logování celého průběhu do `log.txt` (`GameLogger`, zapisuje vstupy i výstupy hry).
 
 Soubory: `Game.java` (hlavní vlastník), `Room.java`, `EntryCondition.java`, `GameLogger.java`.
 

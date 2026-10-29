@@ -104,6 +104,18 @@ public class Room {
         return null;
     }
 
+    /** Prázdný řetězec, pokud v místnosti nejsou nepřátelé, jinak odřádkovaný výpis. */
+    public String describeMonsters() {
+        if (monsters.isEmpty()) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder("\nVidíš nepřátele:");
+        for (Monster monster : monsters) {
+            sb.append("\n  - ").append(monster);
+        }
+        return sb.toString();
+    }
+
     public String describeItems() {
         if (items.isEmpty()) {
             return "V místnosti nic neleží.";
