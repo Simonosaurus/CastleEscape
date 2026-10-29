@@ -12,7 +12,7 @@ Václav, Šimon, Matúš a Marek.
 
 ## Požadavky
 
-- JDK 17 nebo novější (kód používá `switch` s šipkami, textové bloky a `instanceof` s vzorem).
+- JDK 21 nebo novější (kód používá `StringBuilder.repeat`, `switch` s šipkami, textové bloky a `instanceof` s vzorem).
 
 ## Spuštění
 
