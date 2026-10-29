@@ -2,3 +2,7 @@ out/
 .idea/*
 !.idea/misc.xml
 !.idea/modules.xml
+savegame.txt
+log.txt
+target/
+.DS_Store

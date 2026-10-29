@@ -8,11 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Postaví výchozí stav herního světa z CSV souborů ve složce data (oddělovač ";", první řádek je hlavička).
- *
- * Teď se načítá rooms.csv, exits.csv a items.csv (jen název předmětu).
- * Soubory monsters.csv, conditions.csv a sloupce type/stat/value/damage v items.csv
- * se zapojí, až budou hotové třídy Monster, EntryCondition a Weapon.
+ * Postaví výchozí stav herního světa z CSV souborů ve složce data (oddělovač ";", první řádek je hlavička).*
+ * Načítá se rooms.csv, exits.csv, items.csv (včetně typu, vlastnosti a poškození), monsters.csv
+ * a conditions.csv (podmínky vstupu do místností).
  */
 public class WorldLoader {
 
@@ -33,6 +31,8 @@ public class WorldLoader {
         loadRooms();
         loadExits();
         loadItems();
+        loadMonsters();
+        loadConditions();
 
         Room start = rooms.get(START_ROOM_ID);
         if (start == null) {
@@ -68,7 +68,32 @@ public class WorldLoader {
 
     private void loadItems() {
         for (Row row : readRows("items.csv", 6)) {
-            row.roomAt(0).addItem(new Item(row.at(1)));
+            try {
+                Item item = Item.fromData(row.at(2), row.at(1), row.at(3), row.intOrZeroAt(4), row.intOrZeroAt(5));
+                row.roomAt(0).addItem(item);
+            } catch (IllegalArgumentException e){
+                throw row.error(e.getMessage());
+            }
+        }
+    }
+
+    private void loadMonsters() {
+        for (Row row : readRows("monsters.csv", 7)) {
+            row.roomAt(0).addMonster(new Monster(row.at(1), row.intAt(2), row.intAt(3), row.intAt(4), row.at(5), row.at(6)));
+        }
+    }
+
+    private void loadConditions() {
+        for (Row row : readRows("conditions.csv", 4)) {
+            Room room = row.roomAt(0);
+            String stat = row.at(1).toLowerCase();
+            if (!Stats.isValidName(stat)) {
+                throw row.error("neznámá vlastnost '" + row.at(1) + "' (povoleno strength, wisdom, agility, health)");
+            }
+            if (room.getEntryCondition() != null) {
+                throw row.error("místnost s ID " + room.getId() + " už má podmínku vstupu");
+            }
+            room.setEntryCondition(new EntryCondition(stat, row.intAt(2), row.at(3)));
         }
     }
 
@@ -117,6 +142,9 @@ public class WorldLoader {
             } catch (NumberFormatException e) {
                 throw error("'" + at(index) + "' není celé číslo");
             }
+        }
+        int intOrZeroAt(int index){
+            return at(index).isEmpty() ? 0 : intAt(index);
         }
 
         Room roomAt(int index) {

@@ -12,9 +12,11 @@ public class Room {
     private final String name;
     private final Map<String, Room> exits = new HashMap<>();   // klíč je směr "N", "E", "S", "W"
     private final List<Item> items = new ArrayList<>();
+    private final List<Monster> monsters = new ArrayList<>();
     private String description = "";
     private boolean winRoom;
     private String welcomeMessage = "";
+    private EntryCondition entryCondition;   // null = do místnosti se dá vejít vždy
 
     public Room(int id, String name) {
         this.id = id;
@@ -53,6 +55,26 @@ public class Room {
         this.welcomeMessage = welcomeMessage;
     }
 
+    public EntryCondition getEntryCondition() {
+        return entryCondition;
+    }
+
+    public void setEntryCondition(EntryCondition entryCondition) {
+        this.entryCondition = entryCondition;
+    }
+
+    public List<Monster> getMonsters() {
+        return monsters;
+    }
+
+    public void addMonster(Monster monster) {
+        monsters.add(monster);
+    }
+
+    public void removeMonster(Monster monster) {
+        monsters.remove(monster);
+    }
+
     public void addExit(String direction, Room target) {
         exits.put(direction.toUpperCase(), target);
     }
@@ -80,6 +102,18 @@ public class Room {
             }
         }
         return null;
+    }
+
+    /** Prázdný řetězec, pokud v místnosti nejsou nepřátelé, jinak odřádkovaný výpis. */
+    public String describeMonsters() {
+        if (monsters.isEmpty()) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder("\nVidíš nepřátele:");
+        for (Monster monster : monsters) {
+            sb.append("\n  - ").append(monster);
+        }
+        return sb.toString();
     }
 
     public String describeItems() {

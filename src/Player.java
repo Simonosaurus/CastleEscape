@@ -93,7 +93,7 @@ public class Player {
                 sb.append("\n  - ").append(item);
             }
         }
-        sb.append("\nVlastnosti");
+        sb.append("\nVlastnosti:");
         for (String stat : Stats.NAMES){
             String label = Stats.labelCZ(stat);
             sb.append("\n ").append(Character.toUpperCase(label.charAt(0))).append(label.substring(1)).append(": ").append(stats.get(stat));
@@ -113,7 +113,7 @@ public class Player {
             int before = stats.get(stat);
             int after = before + delta;
             if(stat.equals(Stats.HEALTH) && sign < 0){
-                after = Math.max(after, Math.min(before, MIN_HEALTH_AFTER_DISCARD));
+                after = Math.max(after, MIN_HEALTH_AFTER_DISCARD);
             }
             stats.set(stat, after);
             if(after != before){
