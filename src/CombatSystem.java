@@ -23,6 +23,8 @@ public class CombatSystem {
         PLAYER_DIED
     }
 
+    private static final int SPECIAL_ATTACK_EVERY = 3;
+
     private final Supplier<String> input;
 
     public CombatSystem(Supplier<String> input) {
@@ -92,6 +94,7 @@ public class CombatSystem {
         int playerDamage = Math.max(1, stats.getStrength() + player.getWeaponDamage());
         int monsterDamage = Math.max(1, monster.getStrength());
         boolean playerAttacks = stats.getAgility() >= monster.getAgility();
+        int monsterAttacks = 0;
 
         System.out.println();
         System.out.println("Souboj s nepřítelem: " + monster.getName() + " (zdraví " + monster.getHealth() + ")");
@@ -109,8 +112,14 @@ public class CombatSystem {
                     return true;
                 }
             } else {
-                stats.setHealth(Math.max(0, stats.getHealth() - monsterDamage));
-                System.out.println("Nepřítel útočí a způsobuje ti " + monsterDamage
+                monsterAttacks++;
+                int damage = monsterDamage;
+                if (!monster.getSpecial().isBlank() && monsterAttacks % SPECIAL_ATTACK_EVERY == 0) {
+                    damage = monsterDamage * 2;
+                    System.out.println(monster.getSpecial());
+                }
+                stats.setHealth(Math.max(0, stats.getHealth() - damage));
+                System.out.println("Nepřítel útočí a způsobuje ti " + damage
                         + " poškození (zbývá ti " + stats.getHealth() + " zdraví).");
                 if (stats.getHealth() <= 0) {
                     System.out.println("Souboj jsi prohrál.");

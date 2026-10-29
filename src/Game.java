@@ -51,7 +51,7 @@ public class Game {
             case "I" -> System.out.println(player.describeInventory());
             case "P" -> pickUpItem();
             case "D" -> dropItem();
-            case "L" -> System.out.println(player.getCurrentRoom().describeItems());
+            case "L" -> System.out.println(player.getCurrentRoom().describeItems() + player.getCurrentRoom().describeMonsters());
             case "H" -> printHelp();
             case "SAVE" -> saveGame();
             case "LOAD" -> loadGame();
@@ -235,8 +235,11 @@ public class Game {
     private String readLine() {
         if (!scanner.hasNextLine()) {
             running = false;
+            GameLogger.input(null);
             return null;
         }
-        return scanner.nextLine();
+        String line = scanner.nextLine();
+        GameLogger.input(line);
+        return line;
     }
 }

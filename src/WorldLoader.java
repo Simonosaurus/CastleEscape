@@ -78,8 +78,8 @@ public class WorldLoader {
     }
 
     private void loadMonsters() {
-        for (Row row : readRows("monsters.csv", 6)) {
-            row.roomAt(0).addMonster(new Monster(row.at(1), row.intAt(2), row.intAt(3), row.intAt(4), row.at(5)));
+        for (Row row : readRows("monsters.csv", 7)) {
+            row.roomAt(0).addMonster(new Monster(row.at(1), row.intAt(2), row.intAt(3), row.intAt(4), row.at(5), row.at(6)));
         }
     }
 

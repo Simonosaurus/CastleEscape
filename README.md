@@ -42,6 +42,8 @@ V IntelliJ IDEA stačí spustit `Main` a nechat pracovní složku nastavenou na 
 | `LOAD` | načte hru ze souboru `savegame.txt` |
 | `Q` | ukončí hru |
 
+Celý průběh hry (výstupy i tvoje vstupy) se zapisuje do souboru `log.txt` v pracovní složce (soubor je v `.gitignore`).
+
 Uložená hra je v souboru `savegame.txt` v pracovní složce (soubor je v `.gitignore`). `LOAD` vrátí pozici, vlastnosti, inventář, předměty na zemi i živé nepřátele.
 
 ## Herní mechaniky
@@ -66,6 +68,7 @@ src/
   Player, Stats, Item, Weapon   hráč, vlastnosti a předměty
   Monster, CombatSystem         nepřátelé a souboje
   SaveManager   ukládání a načítání hry (SAVE, LOAD)
+  GameLogger    zápis průběhu hry do log.txt
 ```
 
 ### Datové soubory
@@ -75,7 +78,7 @@ src/
 | `rooms.csv` | `id;name;description;win;welcome` |
 | `exits.csv` | `from_id;direction;to_id` |
 | `items.csv` | `room_id;name;type;stat;value;damage` |
-| `monsters.csv` | `room_id;name;health;strength;agility;intro` |
+| `monsters.csv` | `room_id;name;health;strength;agility;intro;special` |
 | `conditions.csv` | `room_id;stat;min_value;message` |
 
 První řádek každého souboru je hlavička. Klíče vlastností (`strength`, `wisdom`, `agility`, `health`) a typ předmětu (`item`, `weapon`) jsou v CSV anglicky, vše, co hráč vidí, je česky.
