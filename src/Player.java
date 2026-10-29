@@ -113,7 +113,7 @@ public class Player {
             int before = stats.get(stat);
             int after = before + delta;
             if(stat.equals(Stats.HEALTH) && sign < 0){
-                after = Math.max(after, Math.min(before, MIN_HEALTH_AFTER_DISCARD));
+                after = Math.clamp(before, after, MIN_HEALTH_AFTER_DISCARD);
             }
             stats.set(stat, after);
             if(after != before){
