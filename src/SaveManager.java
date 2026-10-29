@@ -251,7 +251,7 @@ public class SaveManager {
             return -1;
         }
         if(!rooms.containsKey(id)){
-            throw error(lineNo, "místnost s ID " + id + " ve světe neexistuje.");
+            throw error(lineNo, "místnost s ID " + id + " ve světě neexistuje.");
         }
         return id;
     }

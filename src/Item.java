@@ -19,7 +19,7 @@ public class Item {
         if(stat != null && !stat.isBlank()){
             String key = stat.trim().toLowerCase();
             if(!Stats.isValidName(key)){
-                throw new IllegalArgumentException("neznámá vlastnost ' " + stat + " '(povoleno: strength, wisdom, agility, health)");
+                throw new IllegalArgumentException("neznámá vlastnost '" + stat + "'(povoleno: strength, wisdom, agility, health)");
             }
             modifier.set(key, value);
         }

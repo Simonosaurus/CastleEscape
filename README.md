@@ -28,6 +28,16 @@ java -cp out Main
 
 V IntelliJ IDEA stačí spustit `Main` a nechat pracovní složku nastavenou na kořen projektu. Složka `out/` je v `.gitignore`.
 
+```Spuštení přes maven
+mvn clean package
+java -jar target/castle-escape.jar
+```
+
+```Testy přes maven
+mvn testů
+```
+Soubor obsahuje 62 testú
+
 ## Ovládání
 
 | Příkaz | Význam |

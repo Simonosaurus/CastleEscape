@@ -13,15 +13,15 @@ public class RoomArt {
         String name = room.getName();
         int width = Math.max(15, name.length() + 4);
         if (width % 2 == 0) {
-            width++;   // odd width aby boli dvere presne v streede
+            width++;   // odd width aby boli dvere presne v strede
         }
 
         // Veľkosti dverí:
-        int door = 5; //Horne/spodne dveree ostatok self explenatory
+        int door = 5; //Horne/spodne dvere ostatok self explanatory
         int leftWall = (width - door - 2) / 2;
         int rightWall = width - door - 2 - leftWall;
 
-        // hrac je vždy napravo unless išiel doľavaa
+        // hrac je vždy napravo unless išiel doľava
         boolean playerOnRight = "W".equals(lastMove);
 
         StringBuilder sb = new StringBuilder();

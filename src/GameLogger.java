@@ -27,7 +27,7 @@ public class GameLogger {
         try {
             log = new PrintStream(new FileOutputStream(DEFAULT_FILE.toFile(), true), true, StandardCharsets.UTF_8);
         } catch (IOException e) {
-            System.err.println("Log " + DEFAULT_FILE + " se nepodařilo otevřít, hra se nelogue: " + e.getMessage());
+            System.err.println("Log " + DEFAULT_FILE + " se nepodařilo otevřít, hra se neloguje: " + e.getMessage());
             return;
         }
         log.println();

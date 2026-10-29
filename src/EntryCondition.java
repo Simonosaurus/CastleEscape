@@ -5,7 +5,7 @@ public class EntryCondition {
 
     public EntryCondition(String stat, int minValue, String failMessage) {
         if(!Stats.isValidName(stat)){
-            throw new IllegalArgumentException("neznámá vlastnost '" + stat + "' (povoleno strength, wisdom, agility, health");
+            throw new IllegalArgumentException("neznámá vlastnost '" + stat + "' (povoleno strength, wisdom, agility, health)");
         }
         this.stat = stat;
         this.minValue = minValue;

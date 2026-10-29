@@ -114,6 +114,6 @@ public class Stats {
     }
 
     private static IllegalArgumentException unknown(String stat){
-        return new IllegalArgumentException("neznámá vlastnost ' " + stat + " '(povoleno: strength, wisdom, agility, health)");
+        return new IllegalArgumentException("neznámá vlastnost '" + stat + "'(povoleno: strength, wisdom, agility, health)");
     }
 }
